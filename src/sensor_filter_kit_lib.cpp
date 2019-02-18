@@ -1,6 +1,9 @@
 #include "sensor_filter_kit/sensor_filter_kit_lib.h"
 
-FilterKit::FilterKit(uint sensors[], uint sensor_num, const uint window_size)
+// ******************************** CONSTRUCTORS-DESTRUCTORS *******************************
+
+
+FilterKit::FilterKit(uint sensor_num, const uint window_size)
 {
   window_size_ = window_size;
 
@@ -10,18 +13,20 @@ FilterKit::FilterKit(uint sensors[], uint sensor_num, const uint window_size)
   {
     windows_holder_.push_back(window_filler);
   }
+
+  previous_ema_ = 0;
 }
 
 FilterKit::~FilterKit() {}
 
-void FilterKit::window(int emg_readings[], uint sensors[], uint method)
+void FilterKit::window(int sensor_readings[], uint sensors[], uint method)
 {
-  std::vector<int>::iterator window_it;
+  std::vector<float>::iterator window_it;
   features_.clear();
   for(int i = 0; i < windows_holder_.size(); i++)
   {
     window_it = windows_holder_[i].window.begin();
-    windows_holder_[i].window.insert(window_it, emg_readings[sensors[i]]);
+    windows_holder_[i].window.insert(window_it, sensor_readings[sensors[i]]);
   }
 
   if (windows_holder_[0].window.size() == window_size_)
@@ -32,26 +37,39 @@ void FilterKit::window(int emg_readings[], uint sensors[], uint method)
 
       switch (method)
       {
-        case INTEGRATE:
-          integrate(windows_holder_[i].window);
+        case SMA:
           break;
-        case SSC:
+        case FIR:
+          break;
+        case KALMAN:
           break;
       }
     }
   }
 }
 
-void FilterKit::integrate(std::vector<int> current_window)
+void FilterKit::sma_(std::vector<float> current_window)
 {
-  int temp_window_value = 0;
+  float temp_window_value = 0;
 
   for(int i = 0; i < current_window.size(); i++)
   {
     temp_window_value += current_window[i];
   }
 
+  temp_window_value = temp_window_value / current_window.size();
+
   features_.push_back(temp_window_value);
+}
+
+void FilterKit::ema_(std::vector<float> current_window)
+{
+
+  float new_ema = 0;
+  new_ema = ALPHA_WEIGHT * current_window.front() + (1 - ALPHA_WEIGHT) * previous_ema_;
+
+  features_.push_back(new_ema);
+  previous_ema_ = new_ema;
 }
 
 std::vector<double> FilterKit::get_features()

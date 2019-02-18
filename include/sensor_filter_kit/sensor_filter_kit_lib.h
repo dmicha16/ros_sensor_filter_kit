@@ -1,28 +1,35 @@
 #include <vector>
-// #include <Arduino.h>
+
+#define ALPHA_WEIGHT 0.5
 
 typedef unsigned int uint;
 
-enum feature_method {INTEGRATE = 1, SSC = 2};
-enum Sensors {sB1 = 0, sB2 = 1, sB3 = 2, sT1 = 3, sT2 = 4, sLT1 = 5, sLT2 = 6, sFree = 7};
+enum feature_method {SMA = 1, FIR = 2, KALMAN = 3};
+enum imu_dof {X_DDOT = 0, Y_DDOT = 1, Z_DDOT = 2, PHI_DOT = 3, \
+  THETA_DOT = 4, PSI_DOT = 5};
 
 typedef struct WindowContainer {
-  std::vector<int> window;
+  std::vector<float> window;
 } WindowContainer;
 
 class FilterKit
 {
   public:
-    FilterKit(uint sensors[], uint sensor_num, const uint window_size);
+    FilterKit(uint sensor_num, const uint window_size);
     ~FilterKit();
 
-    void window(int emg_readings[], uint sensors[], uint method);
+    void window(int sensor_readings[], uint sensors[], uint method);
     std::vector<double> get_features();
 
   private:
-    void integrate(std::vector<int> current_window);
 
-    std::vector<int> readings_window_;
+    // Simple Moving Average (SMA)
+    void sma_(std::vector<float> current_window);
+
+    // Exponential moving average (EMA)
+    void ema_(std::vector<float> current_window);
+    float previous_ema_;
+
     uint window_size_;
     std::vector<WindowContainer> windows_holder_;
     std::vector<double> features_;
