@@ -2,13 +2,14 @@ cmake_minimum_required(VERSION 2.8.3)
 project(sensor_filter_kit)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  imu_interface
   std_msgs
 )
 
@@ -147,6 +148,7 @@ add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catk
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
   sensor_filter_kit_lib
+  gy_88_lib
   ${catkin_LIBRARIES}
 )
 

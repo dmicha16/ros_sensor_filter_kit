@@ -1,4 +1,5 @@
 #include <vector>
+#include "iostream"
 
 #define ALPHA_WEIGHT 0.5
 
@@ -18,7 +19,7 @@ class FilterKit
     FilterKit(uint sensor_num, const uint window_size);
     ~FilterKit();
 
-    void window(int sensor_readings[], uint sensors[], uint method);
+    void window(float sensor_readings[], uint sensors[], uint method);
     std::vector<double> get_features();
 
   private:
