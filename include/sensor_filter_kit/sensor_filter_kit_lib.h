@@ -5,7 +5,7 @@
 
 typedef unsigned int uint;
 
-enum feature_method {SMA = 1, FIR = 2, KALMAN = 3};
+enum feature_method {SMA = 1, EMA = 2, KALMAN = 3};
 enum imu_dof {X_DDOT = 0, Y_DDOT = 1, Z_DDOT = 2, PHI_DOT = 3, \
   THETA_DOT = 4, PSI_DOT = 5};
 
