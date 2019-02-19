@@ -7,6 +7,8 @@ FilterKit::FilterKit(uint sensor_num, const uint window_size)
 {
   window_size_ = window_size;
 
+  sensor_num_ = sensor_num;
+
   WindowContainer window_filler;
 
   for(int i = 0; i < sensor_num; i++)
@@ -56,15 +58,20 @@ void FilterKit::window(float sensor_readings[], uint sensors[], uint method)
 
 std::vector<double> FilterKit::get_features()
 {
+  std::vector<double> temp;
 
-  if (features_.size() >= window_size_)
+  if (features_.size() != 0)
   {
     return features_;
   }
   else
   {
-    features_.push_back(0);
-    return features_;
+    for (int i = 0; i < sensor_num_; ++i)
+    {
+      temp.push_back(0);
+    }
+
+    return temp;
   } 
 }
 

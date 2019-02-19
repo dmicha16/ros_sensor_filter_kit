@@ -4,6 +4,8 @@
 #define ALPHA_WEIGHT 0.5
 
 typedef unsigned int uint;
+typedef unsigned long ulong_t;
+typedef unsigned long long uulong_t;
 
 enum feature_method {SMA = 1, EMA = 2, KALMAN = 3};
 enum imu_dof {X_DDOT = 0, Y_DDOT = 1, Z_DDOT = 2, PHI_DOT = 3, \
@@ -32,6 +34,7 @@ class FilterKit
     float previous_ema_;
 
     uint window_size_;
+    uint sensor_num_;
     std::vector<WindowContainer> windows_holder_;
     std::vector<double> features_;
 };
