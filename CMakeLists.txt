@@ -85,7 +85,7 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add "dynamic_reconfigure" to
 ##     find_package(catkin REQUIRED COMPONENTS ...)
 ##   * uncomment the "generate_dynamic_reconfigure_options" section below
-##     and list every .cfg file to be processed
+#dd#     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 # generate_dynamic_reconfigure_options(
@@ -134,6 +134,7 @@ add_library(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/sensor_filter_kit_node.cpp)
+add_executable(${PROJECT_NAME}_node_testing src/sensor_filter_kit_node_testing.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -144,9 +145,16 @@ add_executable(${PROJECT_NAME}_node src/sensor_filter_kit_node.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME}_node_testing ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
+  sensor_filter_kit_lib
+  gy_88_lib
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(${PROJECT_NAME}_node_testing
   sensor_filter_kit_lib
   gy_88_lib
   ${catkin_LIBRARIES}

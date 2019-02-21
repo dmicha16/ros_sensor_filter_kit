@@ -28,7 +28,7 @@ void imu_data_callback(const imu_interface::Gy88Data::ConstPtr& imu_msg)
 int main(int argc, char **argv)
 {
   const uint window_size = 100;
-  const uint SENSOR_NUMBER =  3;
+  const uint SENSOR_NUMBER =  6;
   uint sensors[SENSOR_NUMBER] = {X_DDOT, Y_DDOT, Z_DDOT};
   float sensor_readings[SENSOR_NUMBER];
 
