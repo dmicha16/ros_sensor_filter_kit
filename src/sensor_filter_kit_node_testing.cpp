@@ -76,7 +76,7 @@ int main(int argc, char **argv)
 
   ROS_INFO("Successfully constructed FilterKit class..");
   
-  ros::init(argc, argv, "sensor_filter_kit_node_testing");
+  ros::init(argc, argv, "sensor_filter_kit_node");
   ros::NodeHandle n;
   ros::Subscriber imu_sub = n.subscribe("gy88_data", 1000, imu_data_callback);
   ros::Rate loop_rate(recording_freq);
