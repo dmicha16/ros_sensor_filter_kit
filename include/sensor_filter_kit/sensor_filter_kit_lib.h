@@ -9,7 +9,7 @@ typedef unsigned long ulong_t;
 typedef unsigned long long uulong_t;
 
 enum feature_method {SMA = 1, EMA = 2, KALMAN = 3};
-enum imu_dof {ACCEL_X = 0, ACCEL_Y = 1, ACCEL_Z = 2, GYRO_X = 3, \
+enum {ACCEL_X = 0, ACCEL_Y = 1, ACCEL_Z = 2, GYRO_X = 3, \
   GYRO_Y = 4, GYRO_Z = 5};
 
 typedef struct WindowContainer {

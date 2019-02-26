@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   imu_interface
   std_msgs
-)
+  )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -106,7 +106,7 @@ catkin_package(
   INCLUDE_DIRS include
   LIBRARIES sensor_filter_kit_lib
   CATKIN_DEPENDS roscpp std_msgs
-#  DEPENDS system_lib
+  #  DEPENDS system_lib
 )
 
 ###########
@@ -152,13 +152,13 @@ target_link_libraries(${PROJECT_NAME}_node
   sensor_filter_kit_lib
   gy_88_lib
   ${catkin_LIBRARIES}
-)
+  )
 
 target_link_libraries(${PROJECT_NAME}_node_testing
   sensor_filter_kit_lib
   gy_88_lib
   ${catkin_LIBRARIES}
-)
+  )
 
 #############
 ## Install ##
@@ -184,9 +184,9 @@ target_link_libraries(${PROJECT_NAME}_node_testing
 ## Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-)
+  #   FILES_MATCHING PATTERN "*.h"
+  #   PATTERN ".svn" EXCLUDE
+  )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES

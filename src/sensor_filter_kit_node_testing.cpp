@@ -49,7 +49,24 @@ void imu_data_callback(const imu_interface::Gy88Data::ConstPtr& imu_msg)
 
 int main(int argc, char **argv)
 {
-
+  int recording_freq = 0;
+  if(argc < 3)
+  {
+    ROS_ERROR("Missing params! Try: <recording_type> <recording_freq>.");
+    return 0;
+  }
+  if(strcmp(argv[1], "sma") == 0 || strcmp(argv[1], "ema") == 0)
+  {
+    recording_freq = atoi(argv[2]);
+    ROS_INFO_STREAM("Recording begins using: " << argv[1]);
+    ROS_INFO_STREAM("Recording freq set to: " << recording_freq);
+  }
+  else
+  {
+    ROS_ERROR("No testing is selected, quitting.");
+    return 0;
+  }
+  
   const uint window_size = 100;
   const uint SENSOR_NUMBER = 6;
   uint sensors[SENSOR_NUMBER] = {ACCEL_X, ACCEL_Y, ACCEL_Z, GYRO_X, GYRO_Y, GYRO_Z};
@@ -58,17 +75,16 @@ int main(int argc, char **argv)
   FilterKit filter_kit(SENSOR_NUMBER, window_size);
 
   ROS_INFO("Successfully constructed FilterKit class..");
-
-  ros::init(argc, argv, "sensor_filter_kit_node");
+  
+  ros::init(argc, argv, "sensor_filter_kit_node_testing");
   ros::NodeHandle n;
-
   ros::Subscriber imu_sub = n.subscribe("gy88_data", 1000, imu_data_callback);
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(recording_freq);
 
   std::vector<double> features;
-  std::cout << std::fixed;
-  std::cout << std::setprecision(4);
   int counter = 0;
+  
+  ROS_INFO("Recording began.");
 
   while(ros::ok())
   {
@@ -87,10 +103,6 @@ int main(int argc, char **argv)
     uulong_t timestamp = get_millis_since_epoch();
     
     record_data(timestamp, features);
-//    std::cout << counter << " -X_DDOT: - " << imu_data.x << " - " << features.at(0) << \
-//                          " -Y_DDOT: - " << imu_data.y << " - " << features.at(1) << \
-//                          " -Z_DDOT: - " << imu_data.z << " - " << features.at(2) << std::endl;
-  
     loop_rate.sleep();
     counter++;
   }
