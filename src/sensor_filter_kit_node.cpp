@@ -1,6 +1,6 @@
 #include "sensor_filter_kit/sensor_filter_kit_lib.h"
-#include "imu_interface/gy_88_lib.h"
-#include "imu_interface/Gy88Data.h"
+#include "gy_88_interface/gy_88_lib.h"
+#include "gy_88_interface/Gy88Data.h"
 #include "sensor_filter_kit/SensorKitData.h"
 #include "ros/ros.h"
 #include "iostream"
@@ -23,7 +23,7 @@ struct imu_data
 
 imu_data imu_data;
 
-void imu_data_callback(const imu_interface::Gy88Data::ConstPtr& imu_msg)
+void imu_data_callback(const gy_88_interface::Gy88Data::ConstPtr& imu_msg)
 {
   imu_data.accel_x = imu_msg->accel_x;
   imu_data.accel_y = imu_msg->accel_y;
