@@ -39,7 +39,7 @@ int main(int argc, char **argv)
   int publishing_freq= 0;
   if(argc < 2)
   {
-    ROS_ERROR("Missing param! Try: <recording_freq>.");
+    ROS_ERROR("Missing param! Try: <publishing_freq>.");
     return 0;
   }
   if(atoi(argv[1]) != 0)
